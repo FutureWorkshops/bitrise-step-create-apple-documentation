@@ -53,10 +53,19 @@ workflows:
         - title: Sample
         - copyright: Future Workshops 2019
         - umbrella_header: ./ObjcSimpleFramework/ObjcSimpleFramework.h
+    - change-workdir:
+        title: Switch to Swift framework path
+        description: |-
+          To test the Swift documentation creation, we change to that path
+        run_if: true
+        inputs:
+        - path: ./../..
 
   # ----------------------------------------------------------------
   # --- workflows to Share this step into a Step Library
   audit-this-step:
+    before_run:
+    - test
     steps:
     - script:
         inputs:
