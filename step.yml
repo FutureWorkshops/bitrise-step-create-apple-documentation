@@ -1,0 +1,147 @@
+#
+# A couple of useful guides & docs:
+#
+# - Main Bitrise CLI docs: https://github.com/bitrise-io/bitrise/tree/master/_docs
+# - Step Development Guideline: https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
+# - Bitrise.yml format spec: https://github.com/bitrise-io/bitrise/blob/master/_docs/bitrise-yml-format-spec.md
+# - Bitrise docs: http://devcenter.bitrise.io/
+# - Bitrise CLI guides: http://devcenter.bitrise.io/bitrise-cli/
+
+title: |-
+  Create Apple's documentation
+summary: |
+  This step helps to create a HTML representation of the Framework documentation, using Jazzy as engine
+description: |
+  This step helps to create a HTML representation of the Framework documentation, using Jazzy as engine.
+  Objective-C and Swift are e supported, but there is no declared supported for mixed language projects.
+  THis was created with the goal to export as a reach HTML documents for Frameworks.
+website: https://github.com/FutureWorkshops/bitrise-step-create-apple-s-documentation
+source_code_url: https://github.com/FutureWorkshops/bitrise-step-create-apple-s-documentation
+support_url: https://github.com/FutureWorkshops/bitrise-step-create-apple-s-documentation/issues
+host_os_tags:
+  - osx-10.10
+
+# If this step should be available only for certain project types
+# just uncomment this `project_type_tags` section and include all the
+# project types supported by the step. If the step can be used for all
+# project types then you can just remove this section.
+# If no `project_type_tags` specified (or specified as an empty array)
+# that means the step can be used for any project type.
+# You can find more information about project type tags in the Step Development Guideline:
+# https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
+#
+project_type_tags:
+   - ios
+   - macos
+
+# Type tags are used for categorizing steps, for easier step discovery in Step Libraries.
+# You can find more information about type tags in the Step Development Guideline:
+# https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
+type_tags:
+  - utility
+
+is_requires_admin_user: true
+is_always_run: false
+is_skippable: false
+run_if: ""
+
+deps:
+  check_only:
+  - name: xcode
+
+toolkit:
+  bash:
+    entry_file: step.sh
+
+inputs:
+  - project_path: .
+    opts:
+      title: Project path
+      summary: Path in where the script will be run
+      is_expand: true
+      is_required: true
+  - language: swift
+    opts:
+      title: Language
+      summary: Language used in the project.
+      description: |
+        Language used in the project. Either 'swift', or 'objc'.
+
+        At the moment, the step do not support the generation, of documentation
+        for project with mixed language, even if it is a supported feature on Jazzy.
+      is_expand: true
+      is_required: true
+      value_options: [objc, swift]
+  - author:
+    opts:
+      title: Author
+      summary: Author of the Framework
+      description: ""
+      is_expand: true
+      is_required: true
+  - sdk: iphone
+    opts:
+      title: SDK
+      summary: SDK to which the code is directed
+      is_expand: true
+      is_required: true
+      value_options: [iphone, mac, tv, none]
+  - version: 1.0.0
+    opts:
+      title: Module Version
+      summary: Version string that will be used as Module Version in the documentation
+      description: ""
+      is_expand: true
+      is_required: true
+  - framework_root: .
+    opts:
+      title: Root path of the Framework
+      summary: Root path of where the Framework is
+      is_expand: true
+      is_required: true
+  - module:
+    opts:
+      title: Module name
+      summary: Name of the module (also used as scheme)
+      is_expand: true
+      is_required: true
+  - acl: public
+    opts:
+      title: The minimun ACL used to list the included classes on the doc set
+      is_expand: true
+      is_required: true
+      value_options: [open, public, internal, private]
+  - output: ./docs
+    opts:
+      title: Output of the doc set
+      summary: Path to where the generated files will be saved
+      is_expand: true
+      is_required: true
+  - readme: ./README.md
+    opts:
+      title: README file path
+      summary: Path to the Markdown file that will be used as index of the documentation.
+      description: |
+        This is used to compose the final documentation with a reach index page. The Markdown file is placed as the initial page
+        and all classes are accessible through the class index. By default, the tool uses any README.md file placed in the root of the command,
+        but this can be overwritten with this input.
+      is_expand: true
+      is_required: true
+  - title:
+    opts:
+      title: Title of the project
+      summary: Message used as header title in the doc set
+      is_expand: true
+      is_required: false
+  - copyright:
+    opts:
+      title: Copyright message
+      is_expand: true
+      is_required: false
+  - umbrella_header:
+    opts:
+      title: Path to the Framework umbrella header
+      summary: This is used by Objective-C documentation generation. Optional for Swift
+      is_expand: true
+      is_required: false
+
