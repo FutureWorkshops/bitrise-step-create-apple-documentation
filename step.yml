@@ -13,8 +13,8 @@ summary: |
   This step helps to create a HTML representation of the Framework documentation, using Jazzy as engine
 description: |
   This step helps to create a HTML representation of the Framework documentation, using Jazzy as engine.
-  Objective-C and Swift are e supported, but there is no declared supported for mixed language projects.
-  THis was created with the goal to export as a reach HTML documents for Frameworks.
+  Objective-C and Swift are supported, but there is no declared supported for mixed language projects.
+  This was created with the goal to export as a reach HTML documents for Frameworks.
 website: https://github.com/FutureWorkshops/bitrise-step-create-apple-s-documentation
 source_code_url: https://github.com/FutureWorkshops/bitrise-step-create-apple-s-documentation
 support_url: https://github.com/FutureWorkshops/bitrise-step-create-apple-s-documentation/issues
