@@ -166,6 +166,7 @@ jazzy $BASE_COMMAND \
 	--readme "$readme" \
 	--copyright "$COPYRIGHT"
 
+export DOCUMENTATION_PATH="$output"
 
 
 

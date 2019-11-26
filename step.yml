@@ -53,6 +53,12 @@ toolkit:
   bash:
     entry_file: step.sh
 
+outputs:
+  - DOCUMENTATION_PATH:
+    opts:
+      title: Path with the generated files
+      summary: This variable exposes the path created with the documentation, to be used on further steps
+
 inputs:
   - project_path: .
     opts:
