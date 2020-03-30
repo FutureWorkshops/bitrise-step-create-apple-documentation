@@ -48,9 +48,9 @@ workflows:
         - title: Sample
         - copyright: Future Workshops 2019
     - change-workdir:
-        title: Switch to Swift framework path
+        title: Switch to Objc framework path
         description: |-
-          To test the Swift documentation creation, we change to that path
+          To test the Objc documentation creation, we change to that path
         run_if: true
         inputs:
         - path: ../ObjcSimpleFramework
