@@ -134,19 +134,19 @@ validate_required_input "module" $module
 validate_required_input "acl" $acl
 validate_required_input "output" $output
 
-if [[ -n "$jazzy_configuration" ]]; then
-	CONFIG_PATH="$jazzy_configuration"
-else
-	CONFIG_PATH="$(pwd)/temp_jazzy_config.yaml"
-	create_jazzy_config "$CONFIG_PATH" "$scheme" "$language" "$author"
-fi
-
 if [[ "$language" == "objc" ]]; then
 	validate_required_input "umbrella_header" $umbrella_header
 	BASE_COMMAND="--clean --objc --umbrella-header $umbrella_header"
 else
 	validate_required_input "scheme" $scheme
 	BASE_COMMAND="--clean"
+fi
+
+if [[ -n "$jazzy_configuration" ]]; then
+	CONFIG_PATH="$jazzy_configuration"
+else
+	CONFIG_PATH="$(pwd)/temp_jazzy_config.yaml"
+	create_jazzy_config "$CONFIG_PATH" "$scheme" "$language" "$author"
 fi
 
 JAZZY="$(which jazzy)"
