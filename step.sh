@@ -75,6 +75,29 @@ function validate_required_input_with_options {
 	fi
 }
 
+function create_jazzy_config() {
+	CONFIGPATH=$1
+	SCHEMENAME=$2
+	LANGUAGE=$3
+	AUTHOR=$4
+
+	if [ -f "$CONFIGPATH" ]; then
+		rm "$CONFIGPATH"
+	fi
+
+	echo "" > "$CONFIGPATH"
+
+	echo "author: $AUTHOR" >> "$CONFIGPATH"
+
+	if [[ "$language" == "objc" ]]; then
+		return 0
+	fi
+
+	echo "xcodebuild_arguments:" >> "$CONFIGPATH"
+	echo "    - \"-scheme\"" >> "$CONFIG_PATH"
+	echo "    - \"$SCHEMENAME\"" >> "$CONFIG_PATH"
+}
+
 #=======================================
 # Main
 #=======================================
@@ -83,6 +106,7 @@ function validate_required_input_with_options {
 # Informing values
 echo_info "Configs:"
 
+echo_details "* jazzy_configuration: $jazzy_configuration"
 echo_details "* project_path: $project_path"
 echo_details "* language: $language"
 echo_details "* author: $author"
@@ -110,12 +134,19 @@ validate_required_input "module" $module
 validate_required_input "acl" $acl
 validate_required_input "output" $output
 
+if [[ -n "$jazzy_configuration" ]]; then
+	CONFIG_PATH="$jazzy_configuration"
+else
+	CONFIG_PATH="$(pwd)/temp_jazzy_config.yaml"
+	create_jazzy_config "$CONFIG_PATH" "$scheme" "$language" "$author"
+fi
+
 if [[ "$language" == "objc" ]]; then
 	validate_required_input "umbrella_header" $umbrella_header
 	BASE_COMMAND="--clean --objc --umbrella-header $umbrella_header"
 else
 	validate_required_input "scheme" $scheme
-	BASE_COMMAND="--clean --build-tool-arguments -scheme,$(echo $scheme)"
+	BASE_COMMAND="--clean"
 fi
 
 JAZZY="$(which jazzy)"
@@ -147,6 +178,7 @@ fi
 echo "Running: "
 
 echo "jazzy $BASE_COMMAND \
+	--config \"$CONFIG_PATH\" \
 	--author $author \
 	--sdk $DOC_SDK \
 	--module-version $version \
@@ -157,6 +189,7 @@ echo "jazzy $BASE_COMMAND \
 	$EXTRA_PARAMETERS"
 
 jazzy $BASE_COMMAND \
+	--config "$CONFIG_PATH" \
 	--author $author \
 	--sdk $DOC_SDK \
 	--module-version $version \
@@ -167,6 +200,10 @@ jazzy $BASE_COMMAND \
 	--title "$TITLE" \
 	--readme "$readme" \
 	--copyright "$COPYRIGHT"
+
+if [[ ! -n "$jazzy_configuration" ]]; then
+	rm "$CONFIG_PATH"
+fi
 
 export DOCUMENTATION_PATH="$output"
 

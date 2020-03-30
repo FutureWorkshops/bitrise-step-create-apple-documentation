@@ -60,6 +60,12 @@ outputs:
       summary: This variable exposes the path created with the documentation, to be used on further steps
 
 inputs:
+  - jazzy_configuration:
+    opts:
+      title: Path to the jazzy configuration
+      summary: Path to the jazzy.yaml file used to configure the build. If none is provided, a new one may be created
+      is_expand: true
+      is_required: false
   - project_path: .
     opts:
       title: Project path
