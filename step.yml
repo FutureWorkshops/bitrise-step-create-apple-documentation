@@ -111,6 +111,12 @@ inputs:
       summary: Name of the module (also used as scheme)
       is_expand: true
       is_required: true
+  - scheme:
+    opts:
+      title: Scheme name
+      summary: Name of the scheme that will be used to build the project. Optional for Objective-C
+      is_expand: true
+      is_required: false
   - acl: public
     opts:
       title: The minimun ACL used to list the included classes on the doc set

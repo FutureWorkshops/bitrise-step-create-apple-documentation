@@ -90,6 +90,7 @@ echo_details "* sdk: $sdk"
 echo_details "* version: $version"
 echo_details "* framework_root: $framework_root"
 echo_details "* module: $module"
+echo_details "* scheme: $scheme"
 echo_details "* acl: $acl"
 echo_details "* output: $output"
 echo_details "* readme: $readme"
@@ -113,7 +114,8 @@ if [[ "$language" == "objc" ]]; then
 	validate_required_input "umbrella_header" $umbrella_header
 	BASE_COMMAND="--clean --objc --umbrella-header $umbrella_header"
 else
-	BASE_COMMAND="--clean --build-tool-arguments -scheme,$(echo $module)"
+	validate_required_input "scheme" $scheme
+	BASE_COMMAND="--clean --build-tool-arguments -scheme,$(echo $scheme)"
 fi
 
 JAZZY="$(which jazzy)"
