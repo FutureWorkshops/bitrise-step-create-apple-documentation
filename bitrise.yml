@@ -23,7 +23,7 @@ workflows:
         - version: 1.0.0
         - framework_root: ./
         - module: SampleSwiftFramework
-        - scheme: Sample Swift Framework
+        - scheme: Sample Swift Framework (Development)
         - acl: public
         - output: ./docs
         - readme: ../README.md
