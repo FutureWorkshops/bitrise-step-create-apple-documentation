@@ -15,7 +15,7 @@ description: |
   This step helps to create a HTML representation of the Framework documentation, using Jazzy as engine.
   Objective-C and Swift are supported, but there is no declared supported for mixed language projects.
   This was created with the goal to export as a reach HTML documents for Frameworks.
-website: https://github.com/FutureWorkshops/bitrise-step-create-apple-s-documentation
+website: https://github.com/FutureWorkshops/bitrise-step-create-apple-documentation
 source_code_url: https://github.com/FutureWorkshops/bitrise-step-create-apple-documentation
 support_url: https://github.com/FutureWorkshops/bitrise-step-create-apple-documentation/issues
 host_os_tags:
@@ -60,6 +60,12 @@ outputs:
       summary: This variable exposes the path created with the documentation, to be used on further steps
 
 inputs:
+  - jazzy_configuration:
+    opts:
+      title: Path to the jazzy configuration
+      summary: Path to the jazzy.yaml file used to configure the build. If none is provided, a new one may be created
+      is_expand: true
+      is_required: false
   - project_path: .
     opts:
       title: Project path
@@ -111,6 +117,12 @@ inputs:
       summary: Name of the module (also used as scheme)
       is_expand: true
       is_required: true
+  - scheme:
+    opts:
+      title: Scheme name
+      summary: Name of the scheme that will be used to build the project. Optional for Objective-C
+      is_expand: true
+      is_required: false
   - acl: public
     opts:
       title: The minimun ACL used to list the included classes on the doc set

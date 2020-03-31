@@ -12,7 +12,7 @@ workflows:
         inputs:
         - path: ./test/SampleSwiftFramework
     - path::./:
-        title: Jazzy step
+        title: Swift jazzy step
         description: ''
         run_if: true
         inputs:
@@ -23,20 +23,39 @@ workflows:
         - version: 1.0.0
         - framework_root: ./
         - module: SampleSwiftFramework
+        - scheme: Sample Swift Framework (Development)
+        - acl: public
+        - output: ./docs
+        - readme: ../README.md
+        - title: Sample
+        - copyright: Future Workshops 2019
+    - path::./:
+        title: Swift jazzy step with space
+        description: ''
+        run_if: true
+        inputs:
+        - project_path: ./
+        - language: swift
+        - author: Future Workshops
+        - sdk: iphone
+        - version: 1.0.0
+        - framework_root: ./
+        - module: SampleSwiftFramework
+        - scheme: SampleSwiftFramework
         - acl: public
         - output: ./docs
         - readme: ../README.md
         - title: Sample
         - copyright: Future Workshops 2019
     - change-workdir:
-        title: Switch to Swift framework path
+        title: Switch to Objc framework path
         description: |-
-          To test the Swift documentation creation, we change to that path
+          To test the Objc documentation creation, we change to that path
         run_if: true
         inputs:
         - path: ../ObjcSimpleFramework
     - path::./:
-        title: Jazzy step
+        title: Objc Jazzy step
         description: ''
         run_if: true
         inputs:
@@ -47,6 +66,7 @@ workflows:
         - version: 1.0.0
         - framework_root: ./
         - module: ObjcSimpleFramework
+        - scheme: ObjcSimpleFramework
         - acl: public
         - output: ./docs
         - readme: ../README.md
