@@ -98,6 +98,11 @@ function create_jazzy_config() {
 	echo "    - \"$SCHEMENAME\"" >> "$CONFIG_PATH"
 }
 
+function exists()
+{
+  command -v "$1" >/dev/null 2>&1
+}
+
 #=======================================
 # Main
 #=======================================
@@ -149,10 +154,10 @@ else
 	create_jazzy_config "$CONFIG_PATH" "$scheme" "$language" "$author"
 fi
 
-JAZZY="$(which jazzy)"
-
-if [[ "$JAZZY" == "" || "$JAZY" == "jazzy not found" ]]; then
-	gem install jazzy
+if ! exists jazzy; then
+  echo 'Your system does not have jazzy'
+  echo 'Installing jazzy'
+  gem install jazzy
 fi
 
 if [[ "$sdk" == "mac" || "$sdk" == "none" ]]; then
