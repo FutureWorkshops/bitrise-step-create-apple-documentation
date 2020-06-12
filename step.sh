@@ -190,8 +190,12 @@ echo "jazzy $BASE_COMMAND \
 	--framework-root $framework_root \
 	--module $module \
 	--min-acl $acl \
-	--output $output \
-	$EXTRA_PARAMETERS"
+	--output \"$output\" \
+	--title \"$TITLE\" \
+	--readme \"$readme\" \
+	--copyright \"$COPYRIGHT\""
+
+set +x
 
 jazzy $BASE_COMMAND \
 	--config "$CONFIG_PATH" \
@@ -201,10 +205,12 @@ jazzy $BASE_COMMAND \
 	--framework-root $framework_root \
 	--module $module \
 	--min-acl $acl \
-	--output $output \
+	--output "$output" \
 	--title "$TITLE" \
 	--readme "$readme" \
 	--copyright "$COPYRIGHT"
+
+set -x
 
 if [[ ! -n "$jazzy_configuration" ]]; then
 	rm "$CONFIG_PATH"
