@@ -74,6 +74,31 @@ workflows:
         - copyright: Future Workshops 2019
         - umbrella_header: ./ObjcSimpleFramework/ObjcSimpleFramework.h
     - change-workdir:
+        title: Project with spacing on name
+        description: |-
+          Test creation of documentation for project with a spacing in the name
+        run_if: true
+        inputs:
+        - path: ../Project\ Title
+    - path::./:
+        title: Running Jazzy for project with special characters
+        description: ''
+        run_if: true
+        inputs:
+        - project_path: "./Project Title"
+        - language: swift
+        - author: Future Workshops
+        - sdk: iphone
+        - version: 1.0.0
+        - framework_root: "./Project Title"
+        - module: Project_Title__Development_
+        - scheme: Project Title (Development)
+        - acl: public
+        - output: ./docs
+        - readme: ../README.md
+        - title: Project Title
+        - copyright: Future Workshops 2019
+    - change-workdir:
         title: Switch to Swift framework path
         description: |-
           To test the Swift documentation creation, we change to that path
