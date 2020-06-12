@@ -88,6 +88,7 @@ function create_jazzy_config() {
 	echo "" > "$CONFIGPATH"
 
 	echo "author: $AUTHOR" >> "$CONFIGPATH"
+	echo "output: \"$output\"" >> "$CONFIGPATH"
 
 	if [[ "$language" == "objc" ]]; then
 		return 0
@@ -96,6 +97,11 @@ function create_jazzy_config() {
 	echo "xcodebuild_arguments:" >> "$CONFIGPATH"
 	echo "    - \"-scheme\"" >> "$CONFIG_PATH"
 	echo "    - \"$SCHEMENAME\"" >> "$CONFIG_PATH"
+}
+
+function exists()
+{
+  command -v "$1" >/dev/null 2>&1
 }
 
 #=======================================
@@ -149,10 +155,10 @@ else
 	create_jazzy_config "$CONFIG_PATH" "$scheme" "$language" "$author"
 fi
 
-JAZZY="$(which jazzy)"
-
-if [[ "$JAZZY" == "" || "$JAZY" == "jazzy not found" ]]; then
-	gem install jazzy
+if ! exists jazzy; then
+  echo_info 'Your system does not have jazzy'
+  echo_info 'Installing jazzy'
+  gem install jazzy
 fi
 
 if [[ "$sdk" == "mac" || "$sdk" == "none" ]]; then
@@ -179,27 +185,29 @@ echo "Running: "
 
 echo "jazzy $BASE_COMMAND \
 	--config \"$CONFIG_PATH\" \
-	--author $author \
 	--sdk $DOC_SDK \
 	--module-version $version \
 	--framework-root $framework_root \
 	--module $module \
 	--min-acl $acl \
-	--output $output \
-	$EXTRA_PARAMETERS"
+	--title \"$TITLE\" \
+	--readme \"$readme\" \
+	--copyright \"$COPYRIGHT\""
+
+set +x
 
 jazzy $BASE_COMMAND \
 	--config "$CONFIG_PATH" \
-	--author $author \
 	--sdk $DOC_SDK \
 	--module-version $version \
 	--framework-root $framework_root \
 	--module $module \
 	--min-acl $acl \
-	--output $output \
 	--title "$TITLE" \
 	--readme "$readme" \
 	--copyright "$COPYRIGHT"
+
+set -x
 
 if [[ ! -n "$jazzy_configuration" ]]; then
 	rm "$CONFIG_PATH"
