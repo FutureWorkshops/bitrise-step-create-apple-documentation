@@ -156,8 +156,8 @@ else
 fi
 
 if ! exists jazzy; then
-  echo 'Your system does not have jazzy'
-  echo 'Installing jazzy'
+  echo_info 'Your system does not have jazzy'
+  echo_info 'Installing jazzy'
   gem install jazzy
 fi
 
