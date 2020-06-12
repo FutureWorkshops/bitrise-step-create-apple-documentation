@@ -88,6 +88,7 @@ function create_jazzy_config() {
 	echo "" > "$CONFIGPATH"
 
 	echo "author: $AUTHOR" >> "$CONFIGPATH"
+	echo "output: \"$output\"" >> "$CONFIGPATH"
 
 	if [[ "$language" == "objc" ]]; then
 		return 0
@@ -184,13 +185,11 @@ echo "Running: "
 
 echo "jazzy $BASE_COMMAND \
 	--config \"$CONFIG_PATH\" \
-	--author $author \
 	--sdk $DOC_SDK \
 	--module-version $version \
 	--framework-root $framework_root \
 	--module $module \
 	--min-acl $acl \
-	--output \"$output\" \
 	--title \"$TITLE\" \
 	--readme \"$readme\" \
 	--copyright \"$COPYRIGHT\""
@@ -199,13 +198,11 @@ set +x
 
 jazzy $BASE_COMMAND \
 	--config "$CONFIG_PATH" \
-	--author $author \
 	--sdk $DOC_SDK \
 	--module-version $version \
 	--framework-root $framework_root \
 	--module $module \
 	--min-acl $acl \
-	--output "$output" \
 	--title "$TITLE" \
 	--readme "$readme" \
 	--copyright "$COPYRIGHT"
